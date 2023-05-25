@@ -79,7 +79,6 @@ const closeArtworkDetails = () => {
 
 const displayArtworkDetails = async (artworkObject) => { 
   const artworkInfo = document.getElementById('artwork-details');
-  console.log(artworkObject.data.image_id)
   artworkInfo.classList.add("popup-container")
   artworkInfo.innerHTML=` 
     <div class="artwork-details-container">
@@ -103,3 +102,9 @@ const displayArtworkDetails = async (artworkObject) => {
     </div>
   `;
 }
+
+fetch('https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps', {
+  method: 'POST',
+}).then(response => response.text()).then(response => console.log(response));
+
+// response (app code): ni4kbDviF90gEYVZhT5F
