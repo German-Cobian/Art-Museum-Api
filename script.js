@@ -20,7 +20,10 @@ document.getElementById('search-bar').addEventListener('submit', (e) => {
 
 // Display Collection
 
-const displayArtworks = async (collectionArray) => { 
+const displayArtworks = async (collectionArray) => {
+  const artworksCategory = document.getElementById('artworks-category');
+  artworksCategory.innerHTML = `<h3>${collectionArray[0].artist_title}</h3>`
+
   const artworksList = document.getElementById('artworks-listing');
   collectionArray.forEach((artwork) => {
     artworksList.insertAdjacentHTML('beforeend', ` 
