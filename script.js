@@ -20,6 +20,16 @@ document.getElementById('search-bar').addEventListener('submit', (e) => {
 
 // Display Collection
 
+const countArtworks = () => {
+  const artworksCount = document.getElementById('artworks-listing').children.length;
+  return artworksCount;
+};
+
+const updateArtworksCount = (count) => {
+  const artworksTitle = document.getElementById('by-category-works');
+  artworksTitle.innerText = `Artworks in this Category: (${count})`;
+};
+
 const displayArtworks = async (collectionArray) => {
   const artworksCategory = document.getElementById('artworks-category');
   artworksCategory.innerHTML = `<h3>${collectionArray[0].artist_title}</h3>`
@@ -39,4 +49,6 @@ const displayArtworks = async (collectionArray) => {
       </div> 
     `);
   });
+  const count = countArtworks();
+  updateArtworksCount(count);
 };

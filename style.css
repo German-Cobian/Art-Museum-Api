@@ -13,6 +13,13 @@
   margin-top: 3%;
 }
 
+.collection-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
 #artworks-listing {
   display: flex;
   flex-flow: row wrap;
