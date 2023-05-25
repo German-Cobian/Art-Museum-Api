@@ -1,3 +1,6 @@
+const AppCode = 'ni4kbDviF90gEYVZhT5F'
+const commentsURL = `https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/${AppCode}/comments`;
+
 // Artworks API calls
 
 const getArtworks = async (searchString) => {
@@ -11,6 +14,25 @@ const findArtworkById = async (id) => {
   const result = await fetch(`https://api.artic.edu/api/v1/artworks/${id}`);
   const artwork = await result.json();
   displayArtworkDetails(artwork)
+};
+
+// Comments API calls
+
+const createComment = async (id, username, comment) => {
+  const commentBody = {
+    item_id: id,
+    username,
+    comment,
+  };
+
+  const results = await fetch(commentsURL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(commentBody),
+  });
+  console.log(results.status);
 };
 
 // Search bar
@@ -96,15 +118,40 @@ const displayArtworkDetails = async (artworkObject) => {
         <h6>Place of Origin: <span>${artworkObject.data.place_of_origin}</span></h6>
         <h6>Department Title: <span>${artworkObject.data.department_title}</span></h6>
       </div>
+      <div class="comments-generate"></div>
       <div>
         <button id="close-window" class="btn-close" onclick="closeArtworkDetails()" >Close Window</button>
       </div>
     </div>
   `;
+  const commentsContent = document.querySelector('.comments-generate');
+  commentsContent.innerHTML=`
+    <div class="">
+      <div class="">
+        <h4 class="">Comments:<span class="comments-counter"></span></h4>
+        <div class="comments-data"></div>
+      </div>          
+    </div>
+    <div class="">
+    <form id="post-comment" action="">
+      <label for="name">Name:</label><br>
+      <input id="name" type="text" name="fname" required><br>
+      <label for="comment">Comment:</label><br>
+      <textarea id="commentText" rows="4" cols="50" name="comment" form="post-comment" required></textarea>
+      <input id="comment-btn" class="btn-comment" type="submit" value="Submit">
+    </form> 
+    </div>
+  `;
+  const submitComment = document.getElementById('comment-btn');
+  submitComment.addEventListener('click', (e) => {
+    e.preventDefault();
+      const id = artworkObject.data.id;
+      console.log(id)
+      const username = document.getElementById('name').value;
+      console.log(username)
+      const comment = document.getElementById('commentText').value;
+      console.log(comment)
+      createComment(id, username, comment)
+      document.getElementById('post-comment').reset();
+  });
 }
-
-fetch('https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps', {
-  method: 'POST',
-}).then(response => response.text()).then(response => console.log(response));
-
-// response (app code): ni4kbDviF90gEYVZhT5F
