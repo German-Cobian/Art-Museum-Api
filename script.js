@@ -30,6 +30,11 @@ const updateArtworksCount = (count) => {
   artworksTitle.innerText = `Artworks in this Category: (${count})`;
 };
 
+const reloadWindow = document.getElementById('reload');
+  reloadWindow.addEventListener('click', () => {
+    window.location.reload()
+});
+
 const displayArtworks = async (collectionArray) => {
   const artworksCategory = document.getElementById('artworks-category');
   artworksCategory.innerHTML = `<h3>${collectionArray[0].artist_title}</h3>`

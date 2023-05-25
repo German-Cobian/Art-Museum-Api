@@ -44,12 +44,19 @@ footer {
   background-color: MidnightBlue;
   display: flex;
   flex-direction: row;
-  justify-content: end;
+  justify-content: space-around;
   align-items: center;
 }
 
 .footer-content {
   margin-right: 5%;
+}
+
+.btn-reload {
+  border-radius: 10%;
+  background-color: white;
+  color: blue;
+  padding: 10px;
 }
 
 .white-text {
