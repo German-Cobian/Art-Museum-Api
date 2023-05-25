@@ -62,6 +62,16 @@ const addLike = async (id) => {
   return response.status;
 };
 
+const getLikes = async () => {
+  const result = await fetch(likesURL);
+  const likes = await result.json();
+
+  if (likes.error?.status === 500 || likes.error?.status === 400) {
+    return [];
+  }
+  return likes;
+};
+
 // Search bar
 
 document.getElementById('search-bar').addEventListener('submit', (e) => {
@@ -105,6 +115,7 @@ const displayArtworks = async (collectionArray) => {
           <h6>${artwork.id}</h6>
           <h6>${artwork.artist_title}</h6>
           <h4>${artwork.title}</h4>
+          <h6>Likes:</h6>
         </div>
         <button data-id="${artwork.id}" class="btn-details">Details</button>
         <button like-id="${artwork.id}" class="icon-likes"><i class="fas fa-heart"></i></button>
@@ -121,6 +132,14 @@ const displayArtworks = async (collectionArray) => {
       console.log(artworkId)
       const status = await addLike(artworkId);
       console.log(status)
+      const addedLikes = await getLikes();
+      const likesObject = addedLikes.filter((like) => like.item_id === artworkId);
+      const numberOfLikes = `${likesObject[0].likes} likes`;
+      console.log(numberOfLikes)
+      if (status === 201) {
+        const likeDisplay = likeButton.previousElementSibling.previousElementSibling.children[3];
+        likeDisplay.innerText = numberOfLikes;
+      }
     });
   });
   const count = countArtworks();
