@@ -95,17 +95,32 @@ const updateArtworksCount = (count) => {
   artworksTitle.innerText = `Artworks in this Category: (${count})`;
 };
 
+const likeCounter = (likeObject) => {
+  const likesShowNum = likeObject[0].likes;
+  return likesShowNum;
+};
+
 const reloadWindow = document.getElementById('reload');
   reloadWindow.addEventListener('click', () => {
     window.location.reload();
 });
 
 const displayArtworks = async (collectionArray) => {
+  const likes = await getLikes();
+
   const artworksCategory = document.getElementById('artworks-category');
   artworksCategory.innerHTML = `<h3>${collectionArray[0].artist_title}</h3>`
 
   const artworksList = document.getElementById('artworks-listing');
   collectionArray.forEach((artwork) => {
+    const likeObject = likes.filter((like) => like.item_id == artwork.id);
+    let numberOfLikes = '';
+    if (likeObject.length > 0) {
+      numberOfLikes = `${likeCounter(likeObject)} likes`;
+    } else {
+      numberOfLikes = '0 likes';
+    }
+
     artworksList.insertAdjacentHTML('beforeend', ` 
       <div class="art-items-container">
         <div class="">
@@ -115,7 +130,7 @@ const displayArtworks = async (collectionArray) => {
           <h6>${artwork.id}</h6>
           <h6>${artwork.artist_title}</h6>
           <h4>${artwork.title}</h4>
-          <h6>Likes:</h6>
+          <h6>${numberOfLikes}</h6>
         </div>
         <button data-id="${artwork.id}" class="btn-details">Details</button>
         <button like-id="${artwork.id}" class="icon-likes"><i class="fas fa-heart"></i></button>
@@ -129,13 +144,10 @@ const displayArtworks = async (collectionArray) => {
     const likeButton = document.querySelectorAll(`[like-id="${artwork.id}"]`)[0];
     likeButton.addEventListener('click', async (e) => {
       const artworkId = e.target.parentElement.getAttribute('like-id');
-      console.log(artworkId)
       const status = await addLike(artworkId);
-      console.log(status)
       const addedLikes = await getLikes();
       const likesObject = addedLikes.filter((like) => like.item_id === artworkId);
       const numberOfLikes = `${likesObject[0].likes} likes`;
-      console.log(numberOfLikes)
       if (status === 201) {
         const likeDisplay = likeButton.previousElementSibling.previousElementSibling.children[3];
         likeDisplay.innerText = numberOfLikes;
