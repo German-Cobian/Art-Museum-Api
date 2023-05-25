@@ -7,6 +7,12 @@ const getArtworks = async (searchString) => {
   displayArtworks(artworks.data);
 };
 
+const findArtworkById = async (id) => {
+  const result = await fetch(`https://api.artic.edu/api/v1/artworks/${id}`);
+  const artwork = await result.json();
+  console.log(artwork)
+};
+
 // Search bar
 
 document.getElementById('search-bar').addEventListener('submit', (e) => {
@@ -32,7 +38,7 @@ const updateArtworksCount = (count) => {
 
 const reloadWindow = document.getElementById('reload');
   reloadWindow.addEventListener('click', () => {
-    window.location.reload()
+    window.location.reload();
 });
 
 const displayArtworks = async (collectionArray) => {
@@ -51,8 +57,14 @@ const displayArtworks = async (collectionArray) => {
           <h6>${artwork.artist_title}</h6>
           <h4>${artwork.title}</h4>
         </div>
+        <button data-id="${artwork.id}" class="btn-details">Details</button>
       </div> 
     `);
+    const detailsButton = document.querySelectorAll(`[data-id="${artwork.id}"]`)[0];
+    detailsButton.addEventListener('click', (e) => {
+      const artworkId = e.target.getAttribute('data-id');
+      findArtworkById(artworkId);
+    });
   });
   const count = countArtworks();
   updateArtworksCount(count);
