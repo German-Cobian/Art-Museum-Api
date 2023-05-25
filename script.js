@@ -32,7 +32,16 @@ const createComment = async (id, username, comment) => {
     },
     body: JSON.stringify(commentBody),
   });
-  console.log(results.status);
+  return results.status;
+};
+
+const getComments = async (id) => {
+  const result = await fetch(`${commentsURL}?item_id=${id}`);
+  const comments = await result.json();
+  if (comments.error?.status === 500 || comments.error?.status === 400) {
+    return [];
+  }
+  return comments;
 };
 
 // Search bar
@@ -146,12 +155,19 @@ const displayArtworkDetails = async (artworkObject) => {
   submitComment.addEventListener('click', (e) => {
     e.preventDefault();
       const id = artworkObject.data.id;
-      console.log(id)
       const username = document.getElementById('name').value;
-      console.log(username)
       const comment = document.getElementById('commentText').value;
-      console.log(comment)
       createComment(id, username, comment)
       document.getElementById('post-comment').reset();
+  });
+  const commentsData = document.querySelector('.comments-data');
+  const id = artworkObject.data.id;
+  const comments = await getComments(id)
+  comments.forEach((comment) => {
+    commentsData.insertAdjacentHTML('afterend', `
+      <p class="comments-number"> ** Dated: ${comment.creation_date}  ** By: ${comment.username}</p>
+      <p> Comment: ${comment.comment}</p>
+      <br>
+    `);
   });
 }
