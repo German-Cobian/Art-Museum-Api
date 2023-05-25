@@ -70,6 +70,13 @@ const displayArtworks = async (collectionArray) => {
   updateArtworksCount(count);
 };
 
+// Display Artwork Details
+
+const closeArtworkDetails = () => {
+  const popup = document.getElementById('artwork-details');
+  popup.style.display = 'none';
+};
+
 const displayArtworkDetails = async (artworkObject) => { 
   const artworkInfo = document.getElementById('artwork-details');
   console.log(artworkObject.data.image_id)
@@ -89,6 +96,9 @@ const displayArtworkDetails = async (artworkObject) => {
         <h6>Date: <span>${artworkObject.data.date_display}</span></h6>
         <h6>Place of Origin: <span>${artworkObject.data.place_of_origin}</span></h6>
         <h6>Department Title: <span>${artworkObject.data.department_title}</span></h6>
+      </div>
+      <div>
+        <button id="close-window" class="btn-close" onclick="closeArtworkDetails()" >Close Window</button>
       </div>
     </div>
   `;
