@@ -10,7 +10,7 @@ const getArtworks = async (searchString) => {
 const findArtworkById = async (id) => {
   const result = await fetch(`https://api.artic.edu/api/v1/artworks/${id}`);
   const artwork = await result.json();
-  console.log(artwork)
+  displayArtworkDetails(artwork)
 };
 
 // Search bar
@@ -69,3 +69,27 @@ const displayArtworks = async (collectionArray) => {
   const count = countArtworks();
   updateArtworksCount(count);
 };
+
+const displayArtworkDetails = async (artworkObject) => { 
+  const artworkInfo = document.getElementById('artwork-details');
+  console.log(artworkObject.data.image_id)
+  artworkInfo.classList.add("popup-container")
+  artworkInfo.innerHTML=` 
+    <div class="artwork-details-container">
+      <div class="">
+        <img src="https://www.artwork.edu/iiif/2/${artworkObject.data.image_id}/full/200,/0/default.jpg" />
+      </div>
+      <div>
+        <h6>${artworkObject.data.id}</h6>
+        <h6>Artist: <span>${artworkObject.data.artist_title}</span></h6>
+        <h4>${artworkObject.data.title}</h4>
+        <h6>Artwork Type: <span>${artworkObject.data.artwork_type_title}</span></h6>
+        <h6>Medium: <span>${artworkObject.data.medium_display}</span></h6>
+        <h6>Dimensions: <span>${artworkObject.data.dimensions}</span></h6>
+        <h6>Date: <span>${artworkObject.data.date_display}</span></h6>
+        <h6>Place of Origin: <span>${artworkObject.data.place_of_origin}</span></h6>
+        <h6>Department Title: <span>${artworkObject.data.department_title}</span></h6>
+      </div>
+    </div>
+  `;
+}

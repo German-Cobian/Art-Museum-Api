@@ -35,6 +35,32 @@
   border: 2px solid black;
 }
 
+.popup-container {
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  height:100%;
+  top: 0%;
+  left: 20%;
+  right: 20%;
+  bottom: 0%;
+  z-index: 1;
+  overflow-y: scroll !important;
+  background-color: white;
+  border: 2px solid black;
+}
+
+.artwork-details-container {
+  padding: 20px;
+}
+
+.btn-details {
+  background-color: blue;
+  color: white;
+  margin: 15px;
+  padding: 5px;
+}
+
 footer {
   position: fixed;
   bottom: 0;
