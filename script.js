@@ -1,5 +1,6 @@
 const AppCode = 'ni4kbDviF90gEYVZhT5F'
 const commentsURL = `https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/${AppCode}/comments`;
+const likesURL = `https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/${AppCode}/likes`;
 
 // Artworks API calls
 
@@ -42,6 +43,23 @@ const getComments = async (id) => {
     return [];
   }
   return comments;
+};
+
+// Likes API's calls
+
+const addLike = async (id) => {
+  const likeBody = {
+    item_id: id,
+  };
+
+  const response = await fetch(likesURL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(likeBody),
+  });
+  return response.status;
 };
 
 // Search bar
@@ -89,12 +107,20 @@ const displayArtworks = async (collectionArray) => {
           <h4>${artwork.title}</h4>
         </div>
         <button data-id="${artwork.id}" class="btn-details">Details</button>
+        <button like-id="${artwork.id}" class="icon-likes"><i class="fas fa-heart"></i></button>
       </div> 
     `);
     const detailsButton = document.querySelectorAll(`[data-id="${artwork.id}"]`)[0];
     detailsButton.addEventListener('click', (e) => {
       const artworkId = e.target.getAttribute('data-id');
       findArtworkById(artworkId);
+    });
+    const likeButton = document.querySelectorAll(`[like-id="${artwork.id}"]`)[0];
+    likeButton.addEventListener('click', async (e) => {
+      const artworkId = e.target.parentElement.getAttribute('like-id');
+      console.log(artworkId)
+      const status = await addLike(artworkId);
+      console.log(status)
     });
   });
   const count = countArtworks();
