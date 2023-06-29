@@ -1,4 +1,4 @@
-/* eslint-disable no-use-before-define, no-unused-vars, prefer-destructuring */
+/* eslint-disable no-use-before-define, no-unused-vars, prefer-destructuring, eqeqeq */
 
 const AppCode = 'ni4kbDviF90gEYVZhT5F';
 const commentsURL = `https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/${AppCode}/comments`;
