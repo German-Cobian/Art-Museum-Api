@@ -1,6 +1,7 @@
-/* eslint-disable no-console */
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-use-before-define */
+/* eslint-disable no-use-before-define, no-unused-vars, prefer-destructuring */
+
+const AppCode = 'ni4kbDviF90gEYVZhT5F';
+const commentsURL = `https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/${AppCode}/comments`;
 
 // Artworks API calls
 
@@ -15,6 +16,34 @@ const findArtworkById = async (id) => {
   const result = await fetch(`https://api.artic.edu/api/v1/artworks/${id}`);
   const artwork = await result.json();
   displayArtworkDetails(artwork);
+};
+
+// Comments API calls
+
+const createComment = async (id, username, comment) => {
+  const commentBody = {
+    item_id: id,
+    username,
+    comment,
+  };
+
+  const results = await fetch(commentsURL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(commentBody),
+  });
+  return results.status;
+};
+
+const getComments = async (id) => {
+  const result = await fetch(`${commentsURL}?item_id=${id}`);
+  const comments = await result.json();
+  if (comments.error?.status === 500 || comments.error?.status === 400) {
+    return [];
+  }
+  return comments;
 };
 
 // Search bar
@@ -83,9 +112,9 @@ const closeArtworkDetails = () => {
 
 const displayArtworkDetails = async (artworkObject) => {
   const artworkInfo = document.getElementById('artwork-details');
-  console.log(artworkObject.data.image_id);
   artworkInfo.classList.add('popup-container');
   artworkInfo.innerHTML = ` 
+
     <div class="artwork-details-container">
       <div class="">
         <img src="https://www.artwork.edu/iiif/2/${artworkObject.data.image_id}/full/200,/0/default.jpg" />
@@ -101,9 +130,48 @@ const displayArtworkDetails = async (artworkObject) => {
         <h6>Place of Origin: <span>${artworkObject.data.place_of_origin}</span></h6>
         <h6>Department Title: <span>${artworkObject.data.department_title}</span></h6>
       </div>
+      <div class="comments-generate"></div>
       <div>
         <button id="close-window" class="btn-close" onclick="closeArtworkDetails()" >Close Window</button>
       </div>
     </div>
   `;
+
+  const commentsContent = document.querySelector('.comments-generate');
+  commentsContent.innerHTML = `
+    <div class="">
+      <div class="">
+        <h4 class="">Comments:<span class="comments-counter"></span></h4>
+        <div class="comments-data"></div>
+      </div>          
+    </div>
+    <div class="">
+    <form id="post-comment" action="">
+      <label for="name">Name:</label><br>
+      <input id="name" type="text" name="fname" required><br>
+      <label for="comment">Comment:</label><br>
+      <textarea id="commentText" rows="4" cols="50" name="comment" form="post-comment" required></textarea>
+      <input id="comment-btn" class="btn-comment" type="submit" value="Submit">
+    </form> 
+    </div>
+  `;
+  const submitComment = document.getElementById('comment-btn');
+  submitComment.addEventListener('click', (e) => {
+    e.preventDefault();
+    const id = artworkObject.data.id;
+    const username = document.getElementById('name').value;
+    const comment = document.getElementById('commentText').value;
+    createComment(id, username, comment);
+    document.getElementById('post-comment').reset();
+  });
+  const commentsData = document.querySelector('.comments-data');
+  const id = artworkObject.data.id;
+  const comments = await getComments(id);
+  comments.forEach((comment) => {
+    commentsData.insertAdjacentHTML('afterend', `
+      <p class="comments-number"> ** Dated: ${comment.creation_date}  ** By: ${comment.username}</p>
+      <p> Comment: ${comment.comment}</p>
+      <br>
+    `);
+  });
 };
