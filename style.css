@@ -13,6 +13,28 @@
   margin-top: 3%;
 }
 
+.collection-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#artworks-listing {
+  display: flex;
+  flex-flow: row wrap;
+  border: 2px solid black;
+  margin-top: 2%;
+  margin-bottom: 9%;
+}
+
+.art-items-container {
+  margin: 20px;
+  padding: 5px;
+  width: 20%;
+  border: 2px solid black;
+}
+
 footer {
   position: fixed;
   bottom: 0;
@@ -22,7 +44,7 @@ footer {
   background-color: MidnightBlue;
   display: flex;
   flex-direction: row;
-  justify-content: end;
+  justify-content: space-around;
   align-items: center;
 }
 
@@ -30,6 +52,19 @@ footer {
   margin-right: 5%;
 }
 
+.btn-reload {
+  border-radius: 10%;
+  background-color: white;
+  color: blue;
+  padding: 10px;
+}
+
 .white-text {
   color: white;
+}
+
+@media screen and (max-width: 1000px) {
+  .art-items-container {
+    width: 45%;
+  }
 }
