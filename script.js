@@ -1,3 +1,5 @@
+/* eslint-disable no-use-before-define, no-unused-vars, prefer-destructuring */
+
 const AppCode = 'ni4kbDviF90gEYVZhT5F';
 const commentsURL = `https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/${AppCode}/comments`;
 
@@ -159,7 +161,7 @@ const displayArtworkDetails = async (artworkObject) => {
     const id = artworkObject.data.id;
     const username = document.getElementById('name').value;
     const comment = document.getElementById('commentText').value;
-    createComment(id, username, comment)
+    createComment(id, username, comment);
     document.getElementById('post-comment').reset();
   });
   const commentsData = document.querySelector('.comments-data');
