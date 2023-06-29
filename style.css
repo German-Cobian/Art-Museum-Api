@@ -3,7 +3,7 @@
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  background-color: MidnightBlue;
+  background-color: midnightblue;
 }
 
 #museum-info {
@@ -39,7 +39,7 @@
   margin: 0;
   padding: 0;
   position: fixed;
-  height:100%;
+  height: 100%;
   top: 0%;
   left: 20%;
   right: 20%;
@@ -75,7 +75,7 @@ footer {
   height: 10%;
   width: 100%;
   border: 2px solid black;
-  background-color: MidnightBlue;
+  background-color: midnightblue;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
