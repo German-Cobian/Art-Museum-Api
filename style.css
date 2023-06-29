@@ -61,6 +61,13 @@
   padding: 5px;
 }
 
+.icon-likes {
+  border-radius: 10%;
+  background-color: indianred;
+  color: white;
+  padding: 5px;
+}
+
 .btn-close {
   border-radius: 10%;
   background-color: blue;

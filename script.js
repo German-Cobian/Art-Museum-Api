@@ -1,7 +1,8 @@
-/* eslint-disable no-use-before-define, no-unused-vars, prefer-destructuring */
+/* eslint-disable no-use-before-define, no-unused-vars, prefer-destructuring, eqeqeq */
 
-const AppCode = 'ni4kbDviF90gEYVZhT5F';
+const AppCode = 'ni4kbDviF90gEYVZhT5F'
 const commentsURL = `https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/${AppCode}/comments`;
+const likesURL = `https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/${AppCode}/likes`;
 
 // Artworks API calls
 
@@ -46,6 +47,33 @@ const getComments = async (id) => {
   return comments;
 };
 
+// Likes API's calls
+
+const addLike = async (id) => {
+  const likeBody = {
+    item_id: id,
+  };
+
+  const response = await fetch(likesURL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(likeBody),
+  });
+  return response.status;
+};
+
+const getLikes = async () => {
+  const result = await fetch(likesURL);
+  const likes = await result.json();
+
+  if (likes.error?.status === 500 || likes.error?.status === 400) {
+    return [];
+  }
+  return likes;
+};
+
 // Search bar
 
 document.getElementById('search-bar').addEventListener('submit', (e) => {
@@ -69,17 +97,32 @@ const updateArtworksCount = (count) => {
   artworksTitle.innerText = `Artworks in this Category: (${count})`;
 };
 
+const likeCounter = (likeObject) => {
+  const likesShowNum = likeObject[0].likes;
+  return likesShowNum;
+};
+
 const reloadWindow = document.getElementById('reload');
 reloadWindow.addEventListener('click', () => {
   window.location.reload();
 });
 
 const displayArtworks = async (collectionArray) => {
+  const likes = await getLikes();
+
   const artworksCategory = document.getElementById('artworks-category');
   artworksCategory.innerHTML = `<h3>${collectionArray[0].artist_title}</h3>`;
 
   const artworksList = document.getElementById('artworks-listing');
   collectionArray.forEach((artwork) => {
+    const likeObject = likes.filter((like) => like.item_id == artwork.id);
+    let numberOfLikes = '';
+    if (likeObject.length > 0) {
+      numberOfLikes = `${likeCounter(likeObject)} likes`;
+    } else {
+      numberOfLikes = '0 likes';
+    }
+
     artworksList.insertAdjacentHTML('beforeend', ` 
       <div class="art-items-container">
         <div class="">
@@ -89,14 +132,28 @@ const displayArtworks = async (collectionArray) => {
           <h6>${artwork.id}</h6>
           <h6>${artwork.artist_title}</h6>
           <h4>${artwork.title}</h4>
+          <h6>${numberOfLikes}</h6>
         </div>
         <button data-id="${artwork.id}" class="btn-details">Details</button>
+        <button like-id="${artwork.id}" class="icon-likes"><i class="fas fa-heart"></i></button>
       </div> 
     `);
     const detailsButton = document.querySelectorAll(`[data-id="${artwork.id}"]`)[0];
     detailsButton.addEventListener('click', (e) => {
       const artworkId = e.target.getAttribute('data-id');
       findArtworkById(artworkId);
+    });
+    const likeButton = document.querySelectorAll(`[like-id="${artwork.id}"]`)[0];
+    likeButton.addEventListener('click', async (e) => {
+      const artworkId = e.target.parentElement.getAttribute('like-id');
+      const status = await addLike(artworkId);
+      const addedLikes = await getLikes();
+      const likesObject = addedLikes.filter((like) => like.item_id === artworkId);
+      const numberOfLikes = `${likesObject[0].likes} likes`;
+      if (status === 201) {
+        const likeDisplay = likeButton.previousElementSibling.previousElementSibling.children[3];
+        likeDisplay.innerText = numberOfLikes;
+      }
     });
   });
   const count = countArtworks();
