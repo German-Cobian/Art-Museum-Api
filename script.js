@@ -1,5 +1,4 @@
-
-const AppCode = 'ni4kbDviF90gEYVZhT5F'
+const AppCode = 'ni4kbDviF90gEYVZhT5F';
 const commentsURL = `https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/${AppCode}/comments`;
 
 // Artworks API calls
@@ -111,7 +110,6 @@ const closeArtworkDetails = () => {
 
 const displayArtworkDetails = async (artworkObject) => {
   const artworkInfo = document.getElementById('artwork-details');
-  console.log(artworkObject.data.image_id);
   artworkInfo.classList.add('popup-container');
   artworkInfo.innerHTML = ` 
 
@@ -138,7 +136,7 @@ const displayArtworkDetails = async (artworkObject) => {
   `;
 
   const commentsContent = document.querySelector('.comments-generate');
-  commentsContent.innerHTML=`
+  commentsContent.innerHTML = `
     <div class="">
       <div class="">
         <h4 class="">Comments:<span class="comments-counter"></span></h4>
@@ -158,15 +156,15 @@ const displayArtworkDetails = async (artworkObject) => {
   const submitComment = document.getElementById('comment-btn');
   submitComment.addEventListener('click', (e) => {
     e.preventDefault();
-      const id = artworkObject.data.id;
-      const username = document.getElementById('name').value;
-      const comment = document.getElementById('commentText').value;
-      createComment(id, username, comment)
-      document.getElementById('post-comment').reset();
+    const id = artworkObject.data.id;
+    const username = document.getElementById('name').value;
+    const comment = document.getElementById('commentText').value;
+    createComment(id, username, comment)
+    document.getElementById('post-comment').reset();
   });
   const commentsData = document.querySelector('.comments-data');
   const id = artworkObject.data.id;
-  const comments = await getComments(id)
+  const comments = await getComments(id);
   comments.forEach((comment) => {
     commentsData.insertAdjacentHTML('afterend', `
       <p class="comments-number"> ** Dated: ${comment.creation_date}  ** By: ${comment.username}</p>
@@ -174,5 +172,4 @@ const displayArtworkDetails = async (artworkObject) => {
       <br>
     `);
   });
-}
-
+};
