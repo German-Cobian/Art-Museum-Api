@@ -16,7 +16,7 @@ const getArtworks = async (searchString) => {
 const findArtworkById = async (id) => {
   const result = await fetch(`https://api.artic.edu/api/v1/artworks/${id}`);
   const artwork = await result.json();
-  displayArtworkDetails(artwork)
+  displayArtworkDetails(artwork);
 };
 
 // Comments API calls
@@ -78,8 +78,8 @@ const getLikes = async () => {
 
 document.getElementById('search-bar').addEventListener('submit', (e) => {
   e.preventDefault();
-  searchString = document.getElementById('search-category').value;
-  searchString.toLowerCase()
+  const searchString = document.getElementById('search-category').value;
+  searchString.toLowerCase();
   getArtworks(searchString);
   const landingPage = document.getElementById('museum-info');
   landingPage.style.display = 'none';
@@ -103,15 +103,15 @@ const likeCounter = (likeObject) => {
 };
 
 const reloadWindow = document.getElementById('reload');
-  reloadWindow.addEventListener('click', () => {
-    window.location.reload();
+reloadWindow.addEventListener('click', () => {
+  window.location.reload();
 });
 
 const displayArtworks = async (collectionArray) => {
   const likes = await getLikes();
 
   const artworksCategory = document.getElementById('artworks-category');
-  artworksCategory.innerHTML = `<h3>${collectionArray[0].artist_title}</h3>`
+  artworksCategory.innerHTML = `<h3>${collectionArray[0].artist_title}</h3>`;
 
   const artworksList = document.getElementById('artworks-listing');
   collectionArray.forEach((artwork) => {
@@ -167,10 +167,11 @@ const closeArtworkDetails = () => {
   popup.style.display = 'none';
 };
 
-const displayArtworkDetails = async (artworkObject) => { 
+const displayArtworkDetails = async (artworkObject) => {
   const artworkInfo = document.getElementById('artwork-details');
-  artworkInfo.classList.add("popup-container")
-  artworkInfo.innerHTML=` 
+  artworkInfo.classList.add('popup-container');
+  artworkInfo.innerHTML = ` 
+
     <div class="artwork-details-container">
       <div class="">
         <img src="https://www.artwork.edu/iiif/2/${artworkObject.data.image_id}/full/200,/0/default.jpg" />
@@ -192,8 +193,9 @@ const displayArtworkDetails = async (artworkObject) => {
       </div>
     </div>
   `;
+
   const commentsContent = document.querySelector('.comments-generate');
-  commentsContent.innerHTML=`
+  commentsContent.innerHTML = `
     <div class="">
       <div class="">
         <h4 class="">Comments:<span class="comments-counter"></span></h4>
@@ -213,15 +215,15 @@ const displayArtworkDetails = async (artworkObject) => {
   const submitComment = document.getElementById('comment-btn');
   submitComment.addEventListener('click', (e) => {
     e.preventDefault();
-      const id = artworkObject.data.id;
-      const username = document.getElementById('name').value;
-      const comment = document.getElementById('commentText').value;
-      createComment(id, username, comment)
-      document.getElementById('post-comment').reset();
+    const id = artworkObject.data.id;
+    const username = document.getElementById('name').value;
+    const comment = document.getElementById('commentText').value;
+    createComment(id, username, comment);
+    document.getElementById('post-comment').reset();
   });
   const commentsData = document.querySelector('.comments-data');
   const id = artworkObject.data.id;
-  const comments = await getComments(id)
+  const comments = await getComments(id);
   comments.forEach((comment) => {
     commentsData.insertAdjacentHTML('afterend', `
       <p class="comments-number"> ** Dated: ${comment.creation_date}  ** By: ${comment.username}</p>
@@ -229,4 +231,4 @@ const displayArtworkDetails = async (artworkObject) => {
       <br>
     `);
   });
-}
+};
