@@ -1,3 +1,4 @@
+
 const AppCode = 'ni4kbDviF90gEYVZhT5F'
 const commentsURL = `https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/${AppCode}/comments`;
 
@@ -13,7 +14,7 @@ const getArtworks = async (searchString) => {
 const findArtworkById = async (id) => {
   const result = await fetch(`https://api.artic.edu/api/v1/artworks/${id}`);
   const artwork = await result.json();
-  displayArtworkDetails(artwork)
+  displayArtworkDetails(artwork);
 };
 
 // Comments API calls
@@ -48,8 +49,8 @@ const getComments = async (id) => {
 
 document.getElementById('search-bar').addEventListener('submit', (e) => {
   e.preventDefault();
-  searchString = document.getElementById('search-category').value;
-  searchString.toLowerCase()
+  const searchString = document.getElementById('search-category').value;
+  searchString.toLowerCase();
   getArtworks(searchString);
   const landingPage = document.getElementById('museum-info');
   landingPage.style.display = 'none';
@@ -68,13 +69,13 @@ const updateArtworksCount = (count) => {
 };
 
 const reloadWindow = document.getElementById('reload');
-  reloadWindow.addEventListener('click', () => {
-    window.location.reload();
+reloadWindow.addEventListener('click', () => {
+  window.location.reload();
 });
 
 const displayArtworks = async (collectionArray) => {
   const artworksCategory = document.getElementById('artworks-category');
-  artworksCategory.innerHTML = `<h3>${collectionArray[0].artist_title}</h3>`
+  artworksCategory.innerHTML = `<h3>${collectionArray[0].artist_title}</h3>`;
 
   const artworksList = document.getElementById('artworks-listing');
   collectionArray.forEach((artwork) => {
@@ -108,10 +109,12 @@ const closeArtworkDetails = () => {
   popup.style.display = 'none';
 };
 
-const displayArtworkDetails = async (artworkObject) => { 
+const displayArtworkDetails = async (artworkObject) => {
   const artworkInfo = document.getElementById('artwork-details');
-  artworkInfo.classList.add("popup-container")
-  artworkInfo.innerHTML=` 
+  console.log(artworkObject.data.image_id);
+  artworkInfo.classList.add('popup-container');
+  artworkInfo.innerHTML = ` 
+
     <div class="artwork-details-container">
       <div class="">
         <img src="https://www.artwork.edu/iiif/2/${artworkObject.data.image_id}/full/200,/0/default.jpg" />
@@ -133,6 +136,7 @@ const displayArtworkDetails = async (artworkObject) => {
       </div>
     </div>
   `;
+
   const commentsContent = document.querySelector('.comments-generate');
   commentsContent.innerHTML=`
     <div class="">
@@ -171,3 +175,4 @@ const displayArtworkDetails = async (artworkObject) => {
     `);
   });
 }
+
