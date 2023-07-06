@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/f43f4cb329.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Artwork Gallery</title>
+  </head>
+  <body>
+    <main>
+      <header>
+        <nav class="navbar">
+          <img id="logo"  class="logo" src="./assets/art-gallery-icon.png" alt="logo" height="70" />
+          <h3 class="white-text">Art Institute of Chicago</h3>
+          <form id="search-bar">
+            <label for="search" class="white-text">Search:</label>
+            <input
+            id="search-category"
+            class="formcontrol"
+            type="text"
+            name="search-category"
+            placeholder="Category of artwork"
+            />
+          </form>
+        </nav>
+      </header>
+      <div>
+        <div id="museum-info">
+          <img id="museum-img"  class="" src="./assets/chicago-art-institute.png" alt="logo" height="400"/>
+        </div>
+        <div class="collection-header">
+          <div id="artworks-category"></div>
+          <div id="by-category-works"></div>
+        </div>
+        <div id="artworks-listing"></div>
+        <div>
+          <div id="artwork-details"></div>
+        </div>
+      <footer>
+        <button id="reload" class="btn-reload" onclick="reloadWindow()">New Search</button>
+        <p class="white-text footer-content">Created by German Cobian</p>
+      </footer>
+    </main>
+  </body>
+  <script src="script.js"></script>
+</html>

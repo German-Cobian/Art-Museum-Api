@@ -1,0 +1,119 @@
+.navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  background-color: midnightblue;
+}
+
+#museum-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 3%;
+}
+
+.collection-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#artworks-listing {
+  display: flex;
+  flex-flow: row wrap;
+  border: 2px solid black;
+  margin-top: 2%;
+  margin-bottom: 9%;
+}
+
+.art-items-container {
+  margin: 20px;
+  padding: 5px;
+  width: 20%;
+  border: 2px solid black;
+}
+
+.popup-container {
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  height: 100%;
+  top: 0%;
+  left: 20%;
+  right: 20%;
+  bottom: 0%;
+  z-index: 1;
+  overflow-y: scroll !important;
+  background-color: white;
+  border: 2px solid black;
+}
+
+.artwork-details-container {
+  padding: 20px;
+}
+
+.btn-details {
+  background-color: blue;
+  color: white;
+  margin: 15px;
+  padding: 5px;
+}
+
+.icon-likes {
+  border-radius: 10%;
+  background-color: indianred;
+  color: white;
+  padding: 5px;
+}
+
+.btn-close {
+  border-radius: 10%;
+  background-color: blue;
+  color: white;
+  margin: 10px;
+  padding: 5px;
+}
+
+.btn-comment {
+  border-radius: 10%;
+  background-color: blue;
+  color: white;
+  margin: 10px;
+  padding: 5px;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  height: 10%;
+  width: 100%;
+  border: 2px solid black;
+  background-color: midnightblue;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.footer-content {
+  margin-right: 5%;
+}
+
+.btn-reload {
+  border-radius: 10%;
+  background-color: white;
+  color: blue;
+  padding: 10px;
+}
+
+.white-text {
+  color: white;
+}
+
+@media screen and (max-width: 1000px) {
+  .art-items-container {
+    width: 45%;
+  }
+}
