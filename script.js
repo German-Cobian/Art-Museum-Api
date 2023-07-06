@@ -174,10 +174,9 @@ const displayArtworkDetails = async (artworkObject) => {
 
     <div class="artwork-details-container">
       <div class="">
-        <img src="https://www.artwork.edu/iiif/2/${artworkObject.data.image_id}/full/200,/0/default.jpg" />
+        <img src="https://www.artic.edu/iiif/2/${artworkObject.data.image_id}/full/200,/0/default.jpg" />
       </div>
       <div>
-        <h6>${artworkObject.data.id}</h6>
         <h6>Artist: <span>${artworkObject.data.artist_title}</span></h6>
         <h4>${artworkObject.data.title}</h4>
         <h6>Artwork Type: <span>${artworkObject.data.artwork_type_title}</span></h6>
