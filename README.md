@@ -2,7 +2,7 @@
 
 # Art-Museum-Api
 
- This Javascript app fetches artworks in the Art Institute of Chicago from an API (https://api.artic.edu/api/v1/artworks) and displays their image as well as their title and creator name. 
+This Javascript app fetches artworks in the Art Institute of Chicago from an API. 
 
 From the home page the user can input the artist, or title, or type of artwork that they are searching for: 
 
@@ -12,9 +12,7 @@ The app will then render a listing of all the works that match the search criter
 
 ![Listing pre-likes](/assets/for-presentation/List-pre-likes.png?raw=true "Artworks listing pre-likes")
 
-The user can input "likes" on the artworks of his/her choice. 
-
-![Listing post-likes](/assets/for-presentation/List-post-likes.png?raw=true "Artworks listing post-likes")
+The user can the input "likes" on the artworks of his/her choice. 
 
 The comment button brings up a popup window with additional information regarding the artwork (type of artwork,  medium, dimensions, date, provenance of artist, category in which the artwork is included), the comments posted by other users (if any)...
 
