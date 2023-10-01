@@ -211,14 +211,26 @@ const displayArtworkDetails = async (artworkObject) => {
     </form> 
     </div>
   `;
+  
   const submitComment = document.getElementById('comment-btn');
-  submitComment.addEventListener('click', (e) => {
+  submitComment.addEventListener('click', async (e) => {
     e.preventDefault();
     const id = artworkObject.data.id;
     const username = document.getElementById('name').value;
     const comment = document.getElementById('commentText').value;
-    createComment(id, username, comment);
-    document.getElementById('post-comment').reset();
+    const status = await createComment(id, username, comment);
+
+    if (status === 201) {
+      // Comment created successfully, update the comments display
+      const commentHtml = `
+        <p class="comments-number"> ** Date: Just In  ** By: ${username}</p>
+        <p> Comment: ${comment}</p>
+        <br>
+      `;
+      const commentsContainer = document.querySelector('.comments-data');
+      commentsContainer.insertAdjacentHTML('beforeend', commentHtml);
+      document.getElementById('post-comment').reset();
+    }
   });
   const commentsData = document.querySelector('.comments-data');
   const id = artworkObject.data.id;
@@ -231,3 +243,5 @@ const displayArtworkDetails = async (artworkObject) => {
     `);
   });
 };
+
+displayArtworks();
