@@ -162,10 +162,7 @@ const displayArtworks = async (collectionArray) => {
 
 // Display Artwork Details
 
-const closeArtworkDetails = () => {
-  const popup = document.getElementById('artwork-details');
-  popup.style.display = 'none';
-};
+
 
 const displayArtworkDetails = async (artworkObject) => {
   const artworkInfo = document.getElementById('artwork-details');
@@ -188,7 +185,7 @@ const displayArtworkDetails = async (artworkObject) => {
       </div>
       <div class="comments-generate"></div>
       <div>
-        <button id="close-window" class="btn-close" onclick="closeArtworkDetails()" >Close Window</button>
+        <button id="refresh-window" class="btn-refresh">New Search</button>
       </div>
     </div>
   `;
@@ -223,8 +220,8 @@ const displayArtworkDetails = async (artworkObject) => {
     if (status === 201) {
       // Comment created successfully, update the comments display
       const commentHtml = `
-        <p class="comments-number"> ** Date: Just In  ** By: ${username}</p>
-        <p> Comment: ${comment}</p>
+        <p class="comments-number"><small> ** Date: Just In  ** By: ${username}</small></p>
+        <p><small>Comment: ${comment}</small></p>
         <br>
       `;
       const commentsContainer = document.querySelector('.comments-data');
@@ -237,11 +234,13 @@ const displayArtworkDetails = async (artworkObject) => {
   const comments = await getComments(id);
   comments.forEach((comment) => {
     commentsData.insertAdjacentHTML('afterend', `
-      <p class="comments-number"> ** Dated: ${comment.creation_date}  ** By: ${comment.username}</p>
-      <p> Comment: ${comment.comment}</p>
+      <p class="comments-number"><small>** Dated: ${comment.creation_date}  ** By: ${comment.username}</small></p>
+      <p><small>Comment: ${comment.comment}</small></p>
       <br>
     `);
   });
+  const refreshWindow = document.getElementById('refresh-window');
+  refreshWindow.addEventListener('click', () => {
+    window.location.reload();
+  });
 };
-
-displayArtworks();

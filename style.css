@@ -55,8 +55,10 @@
 }
 
 .btn-details {
-  background-color: blue;
-  color: white;
+  border-radius: 10%;
+  border-color: midnightblue;
+  background-color: white;
+  color: midnightblue;
   margin: 15px;
   padding: 5px;
 }
@@ -68,18 +70,20 @@
   padding: 5px;
 }
 
-.btn-close {
+.btn-refresh {
   border-radius: 10%;
-  background-color: blue;
-  color: white;
+  border-color: midnightblue;
+  background-color: white;
+  color: midnightblue;
   margin: 10px;
   padding: 5px;
 }
 
 .btn-comment {
   border-radius: 10%;
-  background-color: blue;
-  color: white;
+  border-color: midnightblue;
+  background-color: white;
+  color: midnightblue;
   margin: 10px;
   padding: 5px;
 }
